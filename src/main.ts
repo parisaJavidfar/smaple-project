@@ -1,6 +1,12 @@
-import { createApp } from "vue";
 import "./style.css";
-import App from "./App.vue";
-import { router } from "./router";
+import { createApp, type Plugin } from "vue";
 
-createApp(App).use(router).mount("#app");
+import App from "./App.vue";
+
+const app = createApp(App);
+
+Object.values<Plugin>(import.meta.glob("./plugins/*.ts", { eager: true })).map(
+  (plugin) => plugin.install?.(app),
+);
+
+app.mount("#app");
