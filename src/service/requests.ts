@@ -34,7 +34,7 @@ export async function getCoinHistory(
       ENDPOINTS.HISTORY.replace(":id", coinId),
       {
         query: {
-          interval: "d1",
+          interval: "h6",
         },
       },
     );

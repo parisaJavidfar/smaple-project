@@ -23,11 +23,13 @@ const chartCanvas = ref<HTMLCanvasElement | null>(null);
 const props = defineProps<TLineChartProps>();
 
 const chartData = ref({
-  labels: props.chartData.map((data: CoinHistoryInterval) => data.time),
+  labels: props.chartData?.map((data: CoinHistoryInterval) =>
+    new Date(data.time).toDateString(),
+  ),
   datasets: [
     {
       label: "Price",
-      data: props.chartData.map((data: CoinHistoryInterval) => data.priceUsd),
+      data: props.chartData?.map((data: CoinHistoryInterval) => data.priceUsd),
       borderColor: "#42A5F5",
       backgroundColor: "rgba(66, 165, 245, 0.2)",
       borderWidth: 2,
@@ -105,7 +107,7 @@ onMounted(() => {
 .chart-container {
   display: flex;
   justify-items: center;
-  height: 40vh;
+  height: 60vh;
   padding: 2em;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);

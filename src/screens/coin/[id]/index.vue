@@ -1,23 +1,29 @@
 <template>
-  <line-chart :chart-data="chartData" />
+  <line-chart
+    v-if="coinsStore.coinHistory.length"
+    :chart-data="coinsStore.coinHistory"
+  />
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import LineChart from "../../../components/LineChart.vue";
 import { useGetCoinHistory } from "../../../composable/web/useGetCoinHistory.ts";
+import { useCoinsStore } from "../../../stores/coins.ts";
 
 const route = useRoute();
 const router = useRouter();
 
-const chartData = ref();
+const coinId = String(route.params.id);
+
+const coinsStore = useCoinsStore();
 
 onMounted(() => {
-  const coinId = String(route.query.id);
   if (coinId) {
-    chartData.value = useGetCoinHistory(coinId);
+    const { fetchCoinHistory } = useGetCoinHistory(coinId);
+    fetchCoinHistory();
   } else {
     router.replace("/");
   }
