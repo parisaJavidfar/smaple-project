@@ -1,5 +1,5 @@
 import type { App } from "vue";
-import { createMemoryHistory, createRouter } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
 import Index from "../screens/index.vue";
 import Coin from "../screens/coin/[id]/index.vue";
@@ -10,7 +10,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(),
   routes,
 });
 
